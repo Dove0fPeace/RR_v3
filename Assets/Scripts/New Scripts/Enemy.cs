@@ -26,20 +26,24 @@ public class Enemy : MonoBehaviour
 
     private Vector2 _startPosition;
 
+    private GameObject _route;
+
 
     private void Start()
     {
         _routes = new List<Transform>();
-        var route = Instantiate(_Route, new Vector3(0, EnemyMovingLines.Instance.GetRandomMovingLine().y, 0), Quaternion.Euler(0,0,0));
+        _route = Instantiate(_Route, new Vector3(0, EnemyMovingLines.Instance.GetRandomMovingLine().y, 0), Quaternion.Euler(0,0,0));
 
-        for (int i = 0; i < route.transform.childCount; i++)
+        for (int i = 0; i < _route.transform.childCount; i++)
         {
-            _routes.Add(route.transform.GetChild(i));
+            _routes.Add(_route.transform.GetChild(i));
         }
+
+        SpawnInLeftSide = transform.position.y < 0;
         
         routeToGo = SpawnInLeftSide ? 0 : 1;
 
-        speedModifier = 0.5f;
+        speedModifier = Random.Range(0.25f,1.2f);
         tParam = 0f;
         coroutineAllowed = false;
         _start = true;
@@ -63,6 +67,7 @@ public class Enemy : MonoBehaviour
     public void Death()
     {
         Instantiate(_DeathBody, transform.position, Quaternion.identity);
+        Destroy(_route);
         Destroy(gameObject);
     }
 

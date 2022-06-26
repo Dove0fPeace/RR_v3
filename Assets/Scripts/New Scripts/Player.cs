@@ -43,9 +43,11 @@ public class Player : SingletonBase<Player>
 
     private void OnCollisionEnter2D(Collision2D other)
     {
+        print("collision");
         var enemy = other.transform.root.GetComponent<Enemy>();
         if (enemy != null)
         {
+            print("enemy != null");
             enemy.Death();
             EnemyKilled?.Invoke();
         }
