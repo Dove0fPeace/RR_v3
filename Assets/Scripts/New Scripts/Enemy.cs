@@ -5,20 +5,18 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Enemy : MonoBehaviour
 {
-    public bool SpawnInLeftSide;
-    
     [SerializeField] private GameObject _DeathBody;
 
     [SerializeField] private GameObject _Route;
     
     private List<Transform> _routes;
     
-
     private float tParam;
     private float speedModifier;
 
     private int routeToGo;
     
+    private bool SpawnInLeftSide;
     private bool _start;
     private bool coroutineAllowed;
     
@@ -39,7 +37,7 @@ public class Enemy : MonoBehaviour
             _routes.Add(_route.transform.GetChild(i));
         }
 
-        SpawnInLeftSide = transform.position.y < 0;
+        SpawnInLeftSide = transform.position.x < 0;
         
         routeToGo = SpawnInLeftSide ? 0 : 1;
 

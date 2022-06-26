@@ -11,12 +11,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e755f7e8-a67f-4181-8383-77dcc241331f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/New Scripts/KillZone.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/New Scripts/KillZone.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.RR_v3/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RR_v3/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RR_v3/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RR_v3/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/New Scripts/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/New Scripts/Player.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/New Scripts/Enemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/New Scripts/Enemy.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/New Scripts/EnemySpawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/New Scripts/EnemySpawner.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +33,7 @@
     <setting file="file://$PROJECT_DIR$/../../AndroidProjects/TowerDefence/Assets/Scripts/Player.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/New Scripts/EnemySpawner.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/New Scripts/KillZone.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/AppData/Local/Temp/7zO003116B1/EnemySpawner.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -45,10 +44,10 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/New Scripts/Utility/EnemyLineSelector.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/New Scripts/Utility/Way.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/New Scripts/EnemyMovingLines.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/New Scripts/Enemy.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/New Scripts/EnemySpawner.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/New Scripts/KillZone.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/New Scripts/Player.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/New Scripts/Enemy.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/New Scripts/EnemySpawner.cs" />
       </list>
     </option>
   </component>
@@ -98,7 +97,7 @@
       <updated>1656178347250</updated>
       <workItem from="1656178388999" duration="4886000" />
       <workItem from="1656223850321" duration="442000" />
-      <workItem from="1656224337233" duration="23271000" />
+      <workItem from="1656224337233" duration="24462000" />
     </task>
     <servers />
   </component>
