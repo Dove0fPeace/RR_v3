@@ -3,18 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using _Imported;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : SingletonBase<Player>
 {
+    public event Action EnemyKilled;
+    
+    [SerializeField] private UnityEvent _deathEvent;
+    
     [SerializeField] private float _Speed;
 
     private Rigidbody2D _rb;
 
     private bool _isMoving = false;
-
-    public event Action EnemyKilled;
-
+    
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -33,6 +36,12 @@ public class Player : SingletonBase<Player>
         if(_isMoving) return;
         
         _isMoving = true;
+    }
+
+    public void Death()
+    {
+        Stop();
+        _deathEvent?.Invoke();
     }
 
     private void Stop()

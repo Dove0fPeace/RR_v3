@@ -231,7 +231,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &82566391
 MonoBehaviour:
@@ -868,6 +868,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DontDestroyOnLoad: 0
+  _deathEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _Speed: 2
 --- !u!50 &448025567
 Rigidbody2D:
@@ -982,6 +997,7 @@ GameObject:
   m_Component:
   - component: {fileID: 477183831}
   - component: {fileID: 477183832}
+  - component: {fileID: 477183833}
   m_Layer: 0
   m_Name: DeathZone
   m_TagString: DeathZone
@@ -997,11 +1013,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 477183830}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -5, z: 0}
+  m_LocalPosition: {x: 0, y: -5, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_Father: {fileID: 1422263114}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &477183832
 BoxCollider2D:
@@ -1029,6 +1045,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.7, y: 0.5}
   m_EdgeRadius: 0
+--- !u!114 &477183833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477183830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05387dc5e23219a4d8aeb88d19a91e8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &481396125
 GameObject:
   m_ObjectHideFlags: 0
@@ -1858,7 +1886,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 30}
 --- !u!1 &936143159
 GameObject:
@@ -2416,8 +2444,9 @@ Transform:
   m_Children:
   - {fileID: 2071364982}
   - {fileID: 476988463}
+  - {fileID: 477183831}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1498035595
 GameObject:
@@ -3722,7 +3751,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7265525671638366271}
   m_Layer: 0
-  m_Name: BackgroundMover
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3746,7 +3775,7 @@ Transform:
   - {fileID: 7265525672420837219}
   - {fileID: 7265525671691342503}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7265525671691342497
 GameObject:
