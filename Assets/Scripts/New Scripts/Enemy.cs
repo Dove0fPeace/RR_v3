@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Enemy : MonoBehaviour
@@ -59,6 +61,14 @@ public class Enemy : MonoBehaviour
         if (coroutineAllowed)
         {
             StartCoroutine(GoByTheRoute(routeToGo));
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.transform.CompareTag("Player"))
+        {
+            Player.Instance.Death();
         }
     }
 

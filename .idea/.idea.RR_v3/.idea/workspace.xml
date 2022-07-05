@@ -11,10 +11,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e755f7e8-a67f-4181-8383-77dcc241331f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/New Scripts/Interface.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/New Scripts/Interface/CameraFollowPoint.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/New Scripts/Interface/RestartMenu.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/New Scripts/Interface/RestartMenu.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/New Scripts/Utility/SingletonBase.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/New Scripts/Utility/SingletonBase.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.RR_v3/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RR_v3/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.RR_v3/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RR_v3/.idea/indexLayout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.RR_v3/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RR_v3/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RR_v3/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RR_v3/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemy/Bakka.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemy/Bakka.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/GameScene.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/New Scripts/Enemy.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/New Scripts/Enemy.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/New Scripts/EnemySpawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/New Scripts/EnemySpawner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/New Scripts/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/New Scripts/Player.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/New Scripts/SingletonBase.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/New Scripts/SingletonBase.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectVersion.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,14 +41,14 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/New Scripts/InputHandler.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/New Scripts/Interface/CameraFollowPoint.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../3-rd Shooter/Assets/Scripts/Character/PlayerShooter.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/New Scripts/EnemyMovingLines.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../AndroidProjects/TowerDefence/Assets/Scripts/Enemy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/New Scripts/SingletonBase.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/New Scripts/Interface/RestartMenu.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../AndroidProjects/TowerDefence/Assets/Scripts/Player.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/New Scripts/EnemySpawner.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/New Scripts/KillZone.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$USER_HOME$/AppData/Local/Temp/7zO003116B1/EnemySpawner.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -45,9 +60,11 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/New Scripts/Utility/Way.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/New Scripts/EnemyMovingLines.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/New Scripts/KillZone.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/New Scripts/Player.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/New Scripts/Enemy.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/New Scripts/EnemySpawner.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/New Scripts/Enemy.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/New Scripts/Interface/RestartMenu.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/New Scripts/Player.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/New Scripts/Interface/CameraFollowPoint.cs" />
       </list>
     </option>
   </component>
@@ -98,6 +115,7 @@
       <workItem from="1656178388999" duration="4886000" />
       <workItem from="1656223850321" duration="442000" />
       <workItem from="1656224337233" duration="24462000" />
+      <workItem from="1657025142885" duration="4039000" />
     </task>
     <servers />
   </component>
@@ -120,13 +138,16 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/.." />
+    </ignored-roots>
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="461" y="161" key="SettingsEditor" timestamp="1656224352593">
+    <state x="461" y="161" key="SettingsEditor" timestamp="1657025236759">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>
-    <state x="461" y="161" key="SettingsEditor/0.0.1920.1032@0.0.1920.1032" timestamp="1656224352593" />
+    <state x="461" y="161" key="SettingsEditor/0.0.1920.1032@0.0.1920.1032" timestamp="1657025236759" />
     <state x="623" y="223" width="672" height="678" key="search.everywhere.popup" timestamp="1656229611519">
       <screen x="0" y="0" width="1920" height="1032" />
     </state>

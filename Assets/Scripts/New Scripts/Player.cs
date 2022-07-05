@@ -17,17 +17,20 @@ public class Player : SingletonBase<Player>
     private Rigidbody2D _rb;
 
     private bool _isMoving = false;
-    
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        Time.timeScale = 1;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         if (_isMoving)
         {
-            _rb.AddForce(Vector2.up * _Speed, ForceMode2D.Impulse);
+            //_rb.AddForce(Vector2.up * _Speed, ForceMode2D.Impulse);
+            
+            transform.Translate(Vector2.up * _Speed * Time.deltaTime);
         }
     }
 
@@ -42,6 +45,7 @@ public class Player : SingletonBase<Player>
     {
         Stop();
         _deathEvent?.Invoke();
+        Time.timeScale = 0;
     }
 
     private void Stop()
