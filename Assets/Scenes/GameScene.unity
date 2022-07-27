@@ -868,6 +868,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_DontDestroyOnLoad: 0
+  _Animator: {fileID: 570528303}
   _deathEvent:
     m_PersistentCalls:
       m_Calls:

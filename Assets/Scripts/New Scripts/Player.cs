@@ -9,6 +9,8 @@ using UnityEngine.Events;
 public class Player : SingletonBase<Player>
 {
     public event Action EnemyKilled;
+
+    [SerializeField] private Animator _Animator;   
     
     [SerializeField] private UnityEvent _deathEvent;
     
@@ -32,6 +34,11 @@ public class Player : SingletonBase<Player>
             
             transform.Translate(Vector2.up * _Speed * Time.deltaTime);
         }
+    }
+
+    private void LateUpdate()
+    {
+        _Animator.SetBool("IsAttack", _isMoving);
     }
 
     public void Move()
