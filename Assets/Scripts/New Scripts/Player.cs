@@ -57,6 +57,7 @@ public class Player : SingletonBase<Player>
 
     private void Stop()
     {
+        _Animator.SetBool("IsHited",  false);
         _isMoving = false;
         _rb.velocity = Vector2.zero;
     }
@@ -66,6 +67,8 @@ public class Player : SingletonBase<Player>
         var enemy = other.transform.root.GetComponent<Enemy>();
         if (enemy != null)
         {
+            _Animator.SetBool("IsHited",  true);
+            //Debug.Log(Animator.IsHited);
             enemy.Death();
             EnemyKilled?.Invoke();
         }
