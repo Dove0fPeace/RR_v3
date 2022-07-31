@@ -9,6 +9,8 @@ using UnityEngine.Events;
 public class Player : SingletonBase<Player>
 {
     public event Action EnemyKilled;
+
+    [SerializeField] private Animator _Animator;   
     
     [SerializeField] private UnityEvent _deathEvent;
     
@@ -34,6 +36,11 @@ public class Player : SingletonBase<Player>
         }
     }
 
+    private void LateUpdate()
+    {
+        _Animator.SetBool("IsAttack", _isMoving);
+    }
+
     public void Move()
     {
         if(_isMoving) return;
@@ -56,11 +63,9 @@ public class Player : SingletonBase<Player>
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        print("collision");
         var enemy = other.transform.root.GetComponent<Enemy>();
         if (enemy != null)
         {
-            print("enemy != null");
             enemy.Death();
             EnemyKilled?.Invoke();
         }
