@@ -16,4 +16,9 @@ public class EnemyMovingLines : SingletonBase<EnemyMovingLines>
 
         return movingLine;
     }
+
+    public RectTransform GetMovingLine()
+    {
+        return _lines[Random.Range(0, _lines.Length)];
+    }
 }

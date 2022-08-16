@@ -27,12 +27,13 @@ public class Enemy : MonoBehaviour
     private Vector2 _startPosition;
 
     private GameObject _route;
-
+    public RectTransform MovingLine;
 
     private void Start()
     {
         _routes = new List<Transform>();
-        _route = Instantiate(_Route, new Vector3(0, EnemyMovingLines.Instance.GetRandomMovingLine().y, 0), Quaternion.Euler(0,0,0));
+        
+        _route = Instantiate(_Route, new Vector3(0, Camera.main.ScreenToWorldPoint(MovingLine.transform.position).y, 0), Quaternion.Euler(0,0,0));
 
         for (int i = 0; i < _route.transform.childCount; i++)
         {
@@ -49,6 +50,8 @@ public class Enemy : MonoBehaviour
         _start = true;
 
         _startPosition = transform.position;
+
+        Player.Instance.EnemyKilled += RetreatInvoke;
     }
 
     private void Update()
@@ -72,6 +75,21 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        Player.Instance.EnemyKilled -= RetreatInvoke;
+    }
+
+    public void SetMovingLine(RectTransform line)
+    {
+        MovingLine = line;
+    }
+
+    public void RetreatInvoke()
+    {
+        StartCoroutine(Retreat());
+    }
+    
     public void Death()
     {
         Instantiate(_DeathBody, transform.position, Quaternion.identity);
@@ -141,5 +159,14 @@ public class Enemy : MonoBehaviour
 
         coroutineAllowed = true;
         
+    }
+
+    private IEnumerator Retreat()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        _start = true;
+
+        _route.transform.position = new Vector3(0, Camera.main.ScreenToWorldPoint(MovingLine.transform.position).y, 0);
     }
 }
