@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BackgroundController : MonoBehaviour
+public class BackgroundSpawner : MonoBehaviour
 {
     [SerializeField] private BackgroundObject[] _BackgroundPrefabs;
 
@@ -12,9 +12,11 @@ public class BackgroundController : MonoBehaviour
 
     [SerializeField] private BackgroundObject _NextBG;
 
-    public List <BackgroundObject> PastBG;
+    [SerializeField] public static List <BackgroundObject> PastBG = new List<BackgroundObject>();
 
     private bool _nextIsSwitch;
+
+    private int _removeBuffer = 4;
 
     private int _genCycle;
 
@@ -37,6 +39,7 @@ public class BackgroundController : MonoBehaviour
     private void GenerateNextBackground()
     {
         BackgroundObject nextBG = null;
+
         switch(_nextIsSwitch)
         {
             case true:
@@ -57,13 +60,13 @@ public class BackgroundController : MonoBehaviour
         _NextBG = nextBG;
 
         _genCycle++;
-        if(_genCycle == 2)
+        if(_genCycle == _removeBuffer)
         {
             BackgroundObject bg = PastBG[0];
-            PastBG.Remove(bg);
-            Destroy(bg);
+            Destroy(bg.gameObject);
 
-            _genCycle = 1;
+            _genCycle = 0;
+            _removeBuffer = 2;
         }
     }
 

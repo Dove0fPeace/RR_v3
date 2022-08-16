@@ -12,11 +12,20 @@ public class BackgroundObject : MonoBehaviour
 
     private BoxCollider2D _col;
 
-    void Start()
+    void Awake()
     {
         _col = GetComponent<BoxCollider2D>();
         _halfYSize = _col.size.y / 2;
-        _topPosition = new Vector2(transform.position.x ,transform.position.y + _halfYSize);
+    }
+
+    private void Start()
+    {
+        _topPosition = new Vector2(transform.position.x, transform.position.y + _halfYSize);
+    }
+
+    private void OnDestroy()
+    {
+        BackgroundSpawner.PastBG.Remove(this);
     }
 
 }
