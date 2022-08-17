@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -10,20 +11,21 @@ public class EnemySpawner : MonoBehaviour
 
     [SerializeField] private float m_SpawnDelay;
 
-    private bool _firstSpawn;
+    private bool _firstSpawn = true;
 
     private void Start()
     {
-        Player.Instance.EnemyKilled += SpawnInwoke;
-        SpawnInwoke();
+        InvokeSpawn();
     }
 
-    private void OnDestroy()
+    private void Update()
     {
-        Player.Instance.EnemyKilled -= SpawnInwoke;
+        if(Enemy.Enemies.Count == 0)
+        {
+            InvokeSpawn();
+        }
     }
-    
-    private void SpawnInwoke()
+    private void InvokeSpawn()
     {
         int numberOfEnemies = Random.Range(1, 3);
 
@@ -33,16 +35,13 @@ public class EnemySpawner : MonoBehaviour
             _firstSpawn = false;
         }
 
-        StartCoroutine(Spawn(numberOfEnemies));
-    }
-    
-    private IEnumerator Spawn(int count)
-    {
-        yield return new WaitForSeconds(m_SpawnDelay);
-        
-        var enemy = Instantiate(_Enemies[Random.Range(0, _Enemies.Length)],
-            _SpawnPoints[Random.Range(0, _SpawnPoints.Length)].transform.position, Quaternion.Euler(0,0,0));
+        var lines = EnemyMovingLines.Instance.GetRandomMovingLines(numberOfEnemies);
+        for (int i = 0; i < lines.Length; i++)
+        {
+            var enemy = Instantiate(_Enemies[Random.Range(0, _Enemies.Length)],
+                _SpawnPoints[Random.Range(0, _SpawnPoints.Length)].transform.position, Quaternion.Euler(0, 0, 0));
 
-        enemy.MovingLine = EnemyMovingLines.Instance.GetMovingLine();
+            enemy.MovingLine = lines[i];
+        }
     }
 }

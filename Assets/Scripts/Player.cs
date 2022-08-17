@@ -23,7 +23,7 @@ public class Player : SingletonBase<Player>
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        Time.timeScale = 1;
+        Time.timeScale = 0.3f;
     }
 
     private void Update()

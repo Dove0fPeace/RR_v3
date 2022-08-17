@@ -9,19 +9,22 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private GameObject _DeathBody;
 
-    [SerializeField] private GameObject _Route;
-    
+    [SerializeField] private GameObject _RoutePrefab;
+
+    [SerializeField] private float _StartDelay;
+
     private List<Transform> _routes;
-    
+
     private float tParam;
     private float speedModifier;
 
     private int routeToGo;
-    
+
     private bool SpawnInLeftSide;
     private bool _start;
     private bool coroutineAllowed;
-    
+    private bool _goMove = false;
+
     private Vector2 position;
 
     private Vector2 _startPosition;
@@ -29,38 +32,50 @@ public class Enemy : MonoBehaviour
     private GameObject _route;
     public RectTransform MovingLine;
 
+
+    private static HashSet<Enemy> m_Enemies;
+    public static IReadOnlyCollection<Enemy> Enemies => m_Enemies;
+
+    private void OnEnable()
+    {
+        if (m_Enemies == null)
+        {
+            m_Enemies = new HashSet<Enemy>();
+        }
+        m_Enemies.Add(this);
+    }
+
+
     private void Start()
     {
         _routes = new List<Transform>();
-        
-        _route = Instantiate(_Route, new Vector3(0, Camera.main.ScreenToWorldPoint(MovingLine.transform.position).y, 0), Quaternion.Euler(0,0,0));
+
+        _route = Instantiate(_RoutePrefab, new Vector3(0, Camera.main.ScreenToWorldPoint(MovingLine.transform.position).y, 0), Quaternion.Euler(0, 0, 0));
 
         for (int i = 0; i < _route.transform.childCount; i++)
         {
             _routes.Add(_route.transform.GetChild(i));
         }
 
-        SpawnInLeftSide = transform.position.x < 0;
-        
-        routeToGo = SpawnInLeftSide ? 0 : 1;
-
-        speedModifier = Random.Range(0.25f,1.2f);
+        speedModifier = Random.Range(0.25f, 1.2f);
         tParam = 0f;
-        coroutineAllowed = false;
-        _start = true;
 
-        _startPosition = transform.position;
+        PrepareToMove(false);
 
         Player.Instance.EnemyKilled += RetreatInvoke;
+
+        StartCoroutine(StartMovementDelay());
     }
 
     private void Update()
     {
+        if (_goMove == false) return;
+
         if (_start)
         {
             StartCoroutine(StartMove());
         }
-        
+
         if (coroutineAllowed)
         {
             StartCoroutine(GoByTheRoute(routeToGo));
@@ -77,6 +92,7 @@ public class Enemy : MonoBehaviour
 
     private void OnDestroy()
     {
+        m_Enemies.Remove(this);
         Player.Instance.EnemyKilled -= RetreatInvoke;
     }
 
@@ -89,12 +105,33 @@ public class Enemy : MonoBehaviour
     {
         StartCoroutine(Retreat());
     }
-    
+
     public void Death()
     {
         Instantiate(_DeathBody, transform.position, Quaternion.identity);
         Destroy(_route);
         Destroy(gameObject);
+    }
+
+    private void PrepareToMove(bool retreat)
+    {
+        coroutineAllowed = false;
+
+        SpawnInLeftSide = transform.position.x < 0;
+        
+        switch(retreat)
+        {
+            case true:
+                routeToGo = SpawnInLeftSide ? 1 : 0;
+                break;
+            case false:
+                routeToGo = SpawnInLeftSide ? 0 : 1;
+                break;
+        }
+
+        _startPosition = transform.position;
+
+        _start = true;
     }
 
     private IEnumerator GoByTheRoute(int routeNumber)
@@ -109,14 +146,14 @@ public class Enemy : MonoBehaviour
         while (tParam < 1)
         {
             tParam += Time.deltaTime * speedModifier;
-            
+
             position = Mathf.Pow(1 - tParam, 3) * p0 +
                        3 * Mathf.Pow(1 - tParam, 2) * tParam * p1 +
                        3 * (1 - tParam) * Mathf.Pow(tParam, 2) * p2 +
                        Mathf.Pow(tParam, 3) * p3;
 
             transform.position = position;
-            
+
             yield return new WaitForEndOfFrame();
         }
 
@@ -135,7 +172,7 @@ public class Enemy : MonoBehaviour
     private IEnumerator StartMove()
     {
         _start = false;
-        
+
         Vector2 p0 = _startPosition;
         Vector2 p1 = _routes[routeToGo].GetChild(3).position;
         Vector2 p2 = _routes[routeToGo].GetChild(1).position;
@@ -144,28 +181,39 @@ public class Enemy : MonoBehaviour
         while (tParam < 1)
         {
             tParam += Time.deltaTime * speedModifier;
-            
+
             position = Mathf.Pow(1 - tParam, 3) * p0 +
                        3 * Mathf.Pow(1 - tParam, 2) * tParam * p1 +
                        3 * (1 - tParam) * Mathf.Pow(tParam, 2) * p2 +
                        Mathf.Pow(tParam, 3) * p3;
 
             transform.position = position;
-            
+
             yield return new WaitForEndOfFrame();
         }
 
         tParam = 0;
 
         coroutineAllowed = true;
-        
+
+    }
+
+    private IEnumerator StartMovementDelay()
+    {
+        yield return new WaitForSeconds(_StartDelay);
+
+        _route.transform.position = new Vector3(0, Camera.main.ScreenToWorldPoint(MovingLine.transform.position).y, 0);
+
+        _goMove = true;
     }
 
     private IEnumerator Retreat()
     {
         yield return new WaitForSeconds(0.5f);
 
-        _start = true;
+
+        PrepareToMove(true);
+        print(SpawnInLeftSide);
 
         _route.transform.position = new Vector3(0, Camera.main.ScreenToWorldPoint(MovingLine.transform.position).y, 0);
     }

@@ -4,6 +4,8 @@ using UnityEngine;
 public class CameraFollowPoint : MonoBehaviour
 {
     [SerializeField] private float _MovingSpeed;
+
+    [SerializeField] private bool _StopMoving;
     
     private void Start()
     {
@@ -13,6 +15,7 @@ public class CameraFollowPoint : MonoBehaviour
 
     private void Update()
     {
+        if(_StopMoving) return;
         ForwardMoving();
     }
 

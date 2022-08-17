@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9015347401317283609}
   - component: {fileID: 3649183257353417506}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: KillingCollider
   m_TagString: Untagged
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
@@ -68,7 +68,7 @@ GameObject:
   - component: {fileID: 5571427464919019420}
   - component: {fileID: 5571427464919019421}
   - component: {fileID: 5571427464919019422}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Asigaru (Yari)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -112,7 +112,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &5571427464919019422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,7 +126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _DeathBody: {fileID: 5171710108273332511, guid: 188755fb13b9b52449ed9da8a99656aa, type: 3}
-  _Route: {fileID: 1002511532703996219, guid: 88385c2872128614086e4d33c6a9f308, type: 3}
+  _RoutePrefab: {fileID: 1002511532703996219, guid: 88385c2872128614086e4d33c6a9f308, type: 3}
+  _StartDelay: 1
   MovingLine: {fileID: 0}
 --- !u!1 &5571427465211782090
 GameObject:
@@ -138,7 +139,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5571427465211782089}
   - component: {fileID: 5571427465211782088}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +154,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5571427465211782090}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.43, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 5571427464919019420}
@@ -195,7 +196,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5571427465437245344}
   - component: {fileID: 5571427465437245345}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sprite
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -210,7 +211,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5571427465437245347}
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.43, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 5571427464919019420}

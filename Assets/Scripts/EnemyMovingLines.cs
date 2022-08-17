@@ -7,18 +7,35 @@ public class EnemyMovingLines : SingletonBase<EnemyMovingLines>
 {
     
     [SerializeField] private RectTransform[] _lines;
-    
-    public Vector2 GetRandomMovingLine()
+
+    public RectTransform[] GetRandomMovingLines(int size)
     {
-        var line = _lines[Random.Range(0, _lines.Length)];
+        List<RectTransform> list = new List<RectTransform>();
 
-        Vector2 movingLine = Camera.main.ScreenToWorldPoint(line.transform.position);
+        int tries = 0;
+        int maxTries = _lines.Length;
 
-        return movingLine;
-    }
+        while (tries < maxTries && list.Count < size)
+        {
+            var element = _lines[Random.Range(0, _lines.Length)];
 
-    public RectTransform GetMovingLine()
-    {
-        return _lines[Random.Range(0, _lines.Length)];
+            if(!list.Contains(element))
+            {
+                list.Add(element);
+            }
+            else
+            {
+                tries++;
+            }
+        }
+
+        if(list.Count > 0)
+        {
+            return list.ToArray();
+        }
+        else
+        {
+            return null;
+        }
     }
 }
