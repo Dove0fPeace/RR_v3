@@ -10,7 +10,7 @@ public class MenuController : MonoBehaviour
     // private string levelToLoad;
 
     public void PlayButton() {
-        SceneManager.LoadScene(""); // артем, укажи тут название сцены с игрой плс
+        SceneManager.LoadScene(1); // артем, укажи тут название сцены с игрой плс
     }
    
     public void ExitButton() {

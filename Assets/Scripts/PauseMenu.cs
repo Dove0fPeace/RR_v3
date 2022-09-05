@@ -4,48 +4,49 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
-    public static bool IsGamePaused = false;
-    public GameObject pauseMenuUI;
-    public GameObject pauseButton;
+    [SerializeField] private bool IsGamePaused = false;
+    [SerializeField] private GameObject pauseMenuUI;
+    [SerializeField] private GameObject pauseButton;
 
-    // Update is called once per frame
-    void Update(){
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            if (IsGamePaused) {
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (IsGamePaused)
+            {
                 Resume();
-            } else {
+            } else
+            {
                 Pause();
             }
         }  
     }
-
-    private void Resume() {
-        pauseMenuUI.SetActive(false);
-        pauseButton.SetActive(true);
-        Time.timeScale = 1f;
-        IsGamePaused = false;
-
+    public void PauseGame()
+    {
+        Pause();
     }
 
-    private void Pause() {
+    public void ResumeGame()
+    {
+        Resume();
+    }
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+    private void Pause()
+    {
         pauseMenuUI.SetActive(true);
         pauseButton.SetActive(false);
         Time.timeScale = 0f;
         IsGamePaused = true;
     }
 
-    public void ResumeGame() {
-        Resume();
-    }
-    public void QuitGame() {
-        Application.Quit();
-    }
-
-    // public void RestartMenu() {
-
-    // }
-
-    public void PauseGame() {
-        Pause();
+    private void Resume() 
+    {
+        pauseMenuUI.SetActive(false);
+        pauseButton.SetActive(true);
+        Time.timeScale = 1f;
+        IsGamePaused = false;
     }
 }

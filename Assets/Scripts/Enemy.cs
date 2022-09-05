@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private float _StartDelay;
 
+    [SerializeField] private float m_RetreatSpeed;
+
     private List<Transform> _routes;
 
     private float tParam;
@@ -215,6 +217,8 @@ public class Enemy : MonoBehaviour
         PrepareToMove(true);
         print(SpawnInLeftSide);
 
+
+        //_route.transform.position = Vector3.Lerp(transform.position, new Vector3(0, Camera.main.ScreenToWorldPoint(MovingLine.transform.position).y, 0), m_RetreatSpeed * Time.deltaTime);
         _route.transform.position = new Vector3(0, Camera.main.ScreenToWorldPoint(MovingLine.transform.position).y, 0);
     }
 }

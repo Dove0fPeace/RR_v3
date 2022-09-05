@@ -23,15 +23,13 @@ public class Player : SingletonBase<Player>
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        Time.timeScale = 0.3f;
+        Time.timeScale = 1;
     }
 
     private void Update()
     {
         if (_isMoving)
         {
-            //_rb.AddForce(Vector2.up * _Speed, ForceMode2D.Impulse);
-            
             transform.Translate(Vector2.up * _Speed * Time.deltaTime);
         }
     }
@@ -68,7 +66,6 @@ public class Player : SingletonBase<Player>
         if (enemy != null)
         {
             _Animator.SetBool("IsHited",  true);
-            //Debug.Log(Animator.IsHited);
             enemy.Death();
             EnemyKilled?.Invoke();
         }

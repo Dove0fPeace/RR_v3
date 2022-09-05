@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using _Imported;
 using UnityEngine;
 
-public class EnemyMovingLines : SingletonBase<EnemyMovingLines>
+public class EnemyMovingLinesGenerator : SingletonBase<EnemyMovingLinesGenerator>
 {
     
     [SerializeField] private RectTransform[] _lines;

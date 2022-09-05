@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -11,10 +9,15 @@ public class EnemySpawner : MonoBehaviour
 
     [SerializeField] private float m_SpawnDelay;
 
+    [SerializeField] private bool m_SingleSpawn;
+
+    private SpawnMode m_SpawnMode;
+
     private bool _firstSpawn = true;
 
     private void Start()
     {
+        m_SpawnMode = (SpawnMode)PlayerPrefs.GetInt("SpawnMode");
         InvokeSpawn();
     }
 
@@ -27,7 +30,16 @@ public class EnemySpawner : MonoBehaviour
     }
     private void InvokeSpawn()
     {
-        int numberOfEnemies = Random.Range(1, 3);
+        int numberOfEnemies = 1;
+        switch (m_SpawnMode)
+        {
+            case SpawnMode.Single:
+                numberOfEnemies = 1;
+                break;
+            case SpawnMode.Multiply:
+                numberOfEnemies = Random.Range(1, 3);
+                break;
+        }
 
         if (_firstSpawn)
         {
@@ -35,7 +47,7 @@ public class EnemySpawner : MonoBehaviour
             _firstSpawn = false;
         }
 
-        var lines = EnemyMovingLines.Instance.GetRandomMovingLines(numberOfEnemies);
+        var lines = EnemyMovingLinesGenerator.Instance.GetRandomMovingLines(numberOfEnemies);
         for (int i = 0; i < lines.Length; i++)
         {
             var enemy = Instantiate(_Enemies[Random.Range(0, _Enemies.Length)],
