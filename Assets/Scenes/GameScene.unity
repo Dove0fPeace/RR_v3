@@ -257,7 +257,7 @@ MonoBehaviour:
   - {fileID: 5571427464919019422, guid: 34469f944b6defb45870b60af14de8fb, type: 3}
   - {fileID: 5571427464919019422, guid: 9c8b9ccec2fc1144795ca2c731761c56, type: 3}
   m_SpawnDelay: 1
-  m_SingleSpawn: 1
+  m_SingleSpawn: 0
 --- !u!1 &126622560
 GameObject:
   m_ObjectHideFlags: 0
@@ -1952,7 +1952,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _MovingSpeed: 0.3
-  _StopMoving: 0
+  _StopMoving: 1
 --- !u!4 &811707597
 Transform:
   m_ObjectHideFlags: 0

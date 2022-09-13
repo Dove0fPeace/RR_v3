@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private GameObject _DeathBody;
 
-    [SerializeField] private GameObject _RoutePrefab;
+    [SerializeField] private GameObject _WayPrefab;
 
     [SerializeField] private float _StartDelay;
 
@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
 
     private int routeToGo;
 
-    private bool SpawnInLeftSide;
+    private bool IsOnTheLeftSide;
     private bool _start;
     private bool coroutineAllowed;
     private bool _goMove = false;
@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour
 
     private Vector2 _startPosition;
 
-    private GameObject _route;
+    private GameObject _way;
     public RectTransform MovingLine;
 
 
@@ -52,14 +52,15 @@ public class Enemy : MonoBehaviour
     {
         _routes = new List<Transform>();
 
-        _route = Instantiate(_RoutePrefab, new Vector3(0, Camera.main.ScreenToWorldPoint(MovingLine.transform.position).y, 0), Quaternion.Euler(0, 0, 0));
+        _way = Instantiate(_WayPrefab, new Vector3(0, Camera.main.ScreenToWorldPoint(MovingLine.transform.position).y, 0), Quaternion.Euler(0, 0, 0));
 
-        for (int i = 0; i < _route.transform.childCount; i++)
+        for (int i = 0; i < _way.transform.childCount; i++)
         {
-            _routes.Add(_route.transform.GetChild(i));
+            _routes.Add(_way.transform.GetChild(i));
         }
 
-        speedModifier = Random.Range(0.25f, 1.2f);
+        speedModifier = Random.Range(0.65f, 1.1f);
+
         tParam = 0f;
 
         PrepareToMove(false);
@@ -111,23 +112,25 @@ public class Enemy : MonoBehaviour
     public void Death()
     {
         Instantiate(_DeathBody, transform.position, Quaternion.identity);
-        Destroy(_route);
+        Destroy(_way);
         Destroy(gameObject);
     }
 
     private void PrepareToMove(bool retreat)
     {
+        
+
         coroutineAllowed = false;
 
-        SpawnInLeftSide = transform.position.x < 0;
+        IsOnTheLeftSide = transform.position.x < 0;
         
         switch(retreat)
         {
             case true:
-                routeToGo = SpawnInLeftSide ? 1 : 0;
+                routeToGo = IsOnTheLeftSide ? 0 : 1;
                 break;
             case false:
-                routeToGo = SpawnInLeftSide ? 0 : 1;
+                routeToGo = IsOnTheLeftSide ? 0 : 1;
                 break;
         }
 
@@ -194,7 +197,7 @@ public class Enemy : MonoBehaviour
             yield return new WaitForEndOfFrame();
         }
 
-        tParam = 0;
+        tParam = 0f;
 
         coroutineAllowed = true;
 
@@ -204,21 +207,19 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSeconds(_StartDelay);
 
-        _route.transform.position = new Vector3(0, Camera.main.ScreenToWorldPoint(MovingLine.transform.position).y, 0);
+        _way.transform.position = new Vector3(0, Camera.main.ScreenToWorldPoint(MovingLine.transform.position).y, 0);
 
         _goMove = true;
     }
 
     private IEnumerator Retreat()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.6f);
 
-
+        coroutineAllowed = false;
+        StopAllCoroutines();
+        tParam = 0f;
+        _way.transform.position = new Vector3(0, Camera.main.ScreenToWorldPoint(MovingLine.transform.position).y, 0);
         PrepareToMove(true);
-        print(SpawnInLeftSide);
-
-
-        //_route.transform.position = Vector3.Lerp(transform.position, new Vector3(0, Camera.main.ScreenToWorldPoint(MovingLine.transform.position).y, 0), m_RetreatSpeed * Time.deltaTime);
-        _route.transform.position = new Vector3(0, Camera.main.ScreenToWorldPoint(MovingLine.transform.position).y, 0);
     }
 }

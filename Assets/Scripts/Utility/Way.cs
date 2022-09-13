@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Way : MonoBehaviour
@@ -8,7 +5,7 @@ public class Way : MonoBehaviour
     [SerializeField] private Transform[] _Points;
 
     private Vector2 _gizmosPosition;
-
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         for(float t = 0; t <= 1; t += 0.05f)
@@ -25,4 +22,5 @@ public class Way : MonoBehaviour
 
         Gizmos.DrawLine(new Vector2(_Points[2].position.x, _Points[2].position.y), new Vector2(_Points[3].position.x, _Points[3].position.y));
     }
+#endif
 }

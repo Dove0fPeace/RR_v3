@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _DeathBody: {fileID: 5171710108273332511, guid: 188755fb13b9b52449ed9da8a99656aa, type: 3}
-  _RoutePrefab: {fileID: 1002511532703996219, guid: 88385c2872128614086e4d33c6a9f308, type: 3}
+  _WayPrefab: {fileID: 1002511532703996219, guid: 88385c2872128614086e4d33c6a9f308, type: 3}
   _StartDelay: 1
   m_RetreatSpeed: 10
   MovingLine: {fileID: 0}
