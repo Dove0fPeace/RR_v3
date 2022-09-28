@@ -126,10 +126,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _DeathBody: {fileID: 5171710108273332511, guid: 188755fb13b9b52449ed9da8a99656aa, type: 3}
-  _WayPrefab: {fileID: 1002511532703996219, guid: 88385c2872128614086e4d33c6a9f308, type: 3}
-  _StartDelay: 1
-  m_RetreatSpeed: 10
-  MovingLine: {fileID: 0}
+  _WayPrefab: {fileID: 1002511532703996219, guid: 1300d24e9dfaec44fa43fb06dec32105, type: 3}
+  _PathType: 1
+  _MoveSpeed: 4
+  _MovementStartDelay: 1
+  _waypoints:
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
+  - {x: 0, y: 0}
 --- !u!1 &5571427465211782090
 GameObject:
   m_ObjectHideFlags: 0

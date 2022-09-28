@@ -50,10 +50,12 @@ public class EnemySpawner : MonoBehaviour
         var lines = EnemyMovingLinesGenerator.Instance.GetRandomMovingLines(numberOfEnemies);
         for (int i = 0; i < lines.Length; i++)
         {
+            var spawnPoint = _SpawnPoints[Random.Range(0, _SpawnPoints.Length)];
             var enemy = Instantiate(_Enemies[Random.Range(0, _Enemies.Length)],
-                _SpawnPoints[Random.Range(0, _SpawnPoints.Length)].transform.position, Quaternion.Euler(0, 0, 0));
+                spawnPoint.transform.position, Quaternion.Euler(0, 0, 0));
 
             enemy.MovingLine = lines[i];
+            enemy.SpawnPoint = spawnPoint.transform;
         }
     }
 }

@@ -1,8 +1,7 @@
-using System;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Enemy : MonoBehaviour
@@ -11,28 +10,21 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private GameObject _WayPrefab;
 
-    [SerializeField] private float _StartDelay;
 
-    [SerializeField] private float m_RetreatSpeed;
-
-    private List<Transform> _routes;
-
-    private float tParam;
-    private float speedModifier;
-
-    private int routeToGo;
-
-    private bool IsOnTheLeftSide;
-    private bool _start;
-    private bool coroutineAllowed;
-    private bool _goMove = false;
-
-    private Vector2 position;
-
-    private Vector2 _startPosition;
-
+    [SerializeField] private PathType _PathType = PathType.CatmullRom;
+    [SerializeField] private float _MoveSpeed;
+    [SerializeField] private float _MovementStartDelay;
     private GameObject _way;
     public RectTransform MovingLine;
+    public Transform SpawnPoint;
+
+    private Rigidbody2D _targetRigidbody;
+    public Vector2[] _waypoints = new Vector2[3];
+
+    private List<Transform> _fixedPoints = new List<Transform>();
+
+    private Tween t;
+
 
 
     private static HashSet<Enemy> m_Enemies;
@@ -46,43 +38,19 @@ public class Enemy : MonoBehaviour
         }
         m_Enemies.Add(this);
     }
-
-
     private void Start()
     {
-        _routes = new List<Transform>();
-
-        _way = Instantiate(_WayPrefab, new Vector3(0, Camera.main.ScreenToWorldPoint(MovingLine.transform.position).y, 0), Quaternion.Euler(0, 0, 0));
+        _targetRigidbody = GetComponent<Rigidbody2D>();
+        _way = Instantiate(_WayPrefab);
 
         for (int i = 0; i < _way.transform.childCount; i++)
         {
-            _routes.Add(_way.transform.GetChild(i));
+            _fixedPoints.Add(_way.transform.GetChild(i));
         }
-
-        speedModifier = Random.Range(0.65f, 1.1f);
-
-        tParam = 0f;
-
-        PrepareToMove(false);
 
         Player.Instance.EnemyKilled += RetreatInvoke;
 
-        StartCoroutine(StartMovementDelay());
-    }
-
-    private void Update()
-    {
-        if (_goMove == false) return;
-
-        if (_start)
-        {
-            StartCoroutine(StartMove());
-        }
-
-        if (coroutineAllowed)
-        {
-            StartCoroutine(GoByTheRoute(routeToGo));
-        }
+        Invoke("StartMovement", _MovementStartDelay);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -96,18 +64,15 @@ public class Enemy : MonoBehaviour
     private void OnDestroy()
     {
         m_Enemies.Remove(this);
+        t.Kill();
         Player.Instance.EnemyKilled -= RetreatInvoke;
     }
 
-    public void SetMovingLine(RectTransform line)
+    public void Set(RectTransform line)
     {
         MovingLine = line;
     }
 
-    public void RetreatInvoke()
-    {
-        StartCoroutine(Retreat());
-    }
 
     public void Death()
     {
@@ -116,110 +81,55 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void PrepareToMove(bool retreat)
+    #region Movement
+    private void StartMovement()
     {
-        
+        transform.position = SpawnPoint.position;
+        StartCoroutine(CurveMove());
+    }
 
-        coroutineAllowed = false;
+    private void RetreatInvoke()
+    {
+        StartCoroutine(CurveMove());
+    }
+    private IEnumerator CurveMove()
+    {
+        yield return new WaitForSeconds(_MovementStartDelay/2);
 
-        IsOnTheLeftSide = transform.position.x < 0;
-        
-        switch(retreat)
+        _way.transform.position = new Vector3(0, Camera.main.ScreenToWorldPoint(MovingLine.transform.position).y, 0);
+
+        Vector2 currentPosition = transform.position;
+
+        bool IsOnTheLeftSide = transform.position.x < 0;
+
+        switch (IsOnTheLeftSide)
         {
             case true:
-                routeToGo = IsOnTheLeftSide ? 0 : 1;
+                _waypoints[0] = currentPosition;
+                _waypoints[1] = _fixedPoints[1].position;
+                _waypoints[2] = _fixedPoints[0].position;
                 break;
             case false:
-                routeToGo = IsOnTheLeftSide ? 0 : 1;
+                _waypoints[0] = currentPosition;
+                _waypoints[1] = _fixedPoints[0].position;
+                _waypoints[2] = _fixedPoints[1].position;
                 break;
         }
 
-        _startPosition = transform.position;
-
-        _start = true;
+        t.Kill();
+        t = _targetRigidbody.DOPath(_waypoints, _MoveSpeed*1.6f, _PathType, PathMode.TopDown2D, 5).SetSpeedBased().OnComplete(Move);
+        t.SetEase(Ease.OutSine);
     }
-
-    private IEnumerator GoByTheRoute(int routeNumber)
+    private void Move()
     {
-        coroutineAllowed = false;
+        Vector2 waypoint;
 
-        Vector2 p0 = _routes[routeNumber].GetChild(0).position;
-        Vector2 p1 = _routes[routeNumber].GetChild(1).position;
-        Vector2 p2 = _routes[routeNumber].GetChild(2).position;
-        Vector2 p3 = _routes[routeNumber].GetChild(3).position;
-
-        while (tParam < 1)
-        {
-            tParam += Time.deltaTime * speedModifier;
-
-            position = Mathf.Pow(1 - tParam, 3) * p0 +
-                       3 * Mathf.Pow(1 - tParam, 2) * tParam * p1 +
-                       3 * (1 - tParam) * Mathf.Pow(tParam, 2) * p2 +
-                       Mathf.Pow(tParam, 3) * p3;
-
-            transform.position = position;
-
-            yield return new WaitForEndOfFrame();
-        }
-
-        tParam = 0f;
-
-        routeToGo += 1;
-
-        if (routeToGo > _routes.Count - 1)
-        {
-            routeToGo = 0;
-        }
-
-        coroutineAllowed = true;
+        bool IsOnTheLeftSide = transform.position.x < 0;
+        waypoint = IsOnTheLeftSide ? _fixedPoints[0].position : _fixedPoints[1].position;
+        t.Kill();
+        t = _targetRigidbody.DOMove(waypoint, _MoveSpeed).SetSpeedBased().SetEase(Ease.InOutSine);
+        t.SetLoops(-1, LoopType.Yoyo);
     }
 
-    private IEnumerator StartMove()
-    {
-        _start = false;
-
-        Vector2 p0 = _startPosition;
-        Vector2 p1 = _routes[routeToGo].GetChild(3).position;
-        Vector2 p2 = _routes[routeToGo].GetChild(1).position;
-        Vector2 p3 = _routes[routeToGo].GetChild(0).position;
-
-        while (tParam < 1)
-        {
-            tParam += Time.deltaTime * speedModifier;
-
-            position = Mathf.Pow(1 - tParam, 3) * p0 +
-                       3 * Mathf.Pow(1 - tParam, 2) * tParam * p1 +
-                       3 * (1 - tParam) * Mathf.Pow(tParam, 2) * p2 +
-                       Mathf.Pow(tParam, 3) * p3;
-
-            transform.position = position;
-
-            yield return new WaitForEndOfFrame();
-        }
-
-        tParam = 0f;
-
-        coroutineAllowed = true;
-
-    }
-
-    private IEnumerator StartMovementDelay()
-    {
-        yield return new WaitForSeconds(_StartDelay);
-
-        _way.transform.position = new Vector3(0, Camera.main.ScreenToWorldPoint(MovingLine.transform.position).y, 0);
-
-        _goMove = true;
-    }
-
-    private IEnumerator Retreat()
-    {
-        yield return new WaitForSeconds(0.6f);
-
-        coroutineAllowed = false;
-        StopAllCoroutines();
-        tParam = 0f;
-        _way.transform.position = new Vector3(0, Camera.main.ScreenToWorldPoint(MovingLine.transform.position).y, 0);
-        PrepareToMove(true);
-    }
+    #endregion
 }
